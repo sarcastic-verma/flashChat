@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "337321301480",
+    "firebase_url": "https://flashchat-b9aaa.firebaseio.com",
+    "project_id": "flashchat-b9aaa",
+    "storage_bucket": "flashchat-b9aaa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:337321301480:android:088cdc16ea94a3b60b805d",
+        "android_client_info": {
+          "package_name": "co.dope.flash_chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "337321301480-l2n7ekegsr6nqlmj2fj01fc5mthsn550.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBdEU8mjYmT_iX13gNIWt4gmYvatceN94M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "337321301480-l2n7ekegsr6nqlmj2fj01fc5mthsn550.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
