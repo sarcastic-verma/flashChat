@@ -13,6 +13,7 @@ class RegistrationScreen extends StatefulWidget {
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
   String email;
+  String name;
   String password;
   bool showSpinner = false;
   final _auth = FirebaseAuth.instance;
@@ -46,10 +47,22 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     keyboardType: TextInputType.emailAddress,
                     textAlign: TextAlign.center,
                     onChanged: (value) {
+                      name = value;
+                    },
+                    decoration: kTextFieldDecoration.copyWith(
+                        hintText: "Sassy Username"),
+                  ),
+                  SizedBox(
+                    height: 8.0,
+                  ),
+                  TextField(
+                    keyboardType: TextInputType.emailAddress,
+                    textAlign: TextAlign.center,
+                    onChanged: (value) {
                       email = value;
                     },
                     decoration: kTextFieldDecoration.copyWith(
-                        hintText: "Enter your email"),
+                        hintText: "Valid/Dummy EmailId"),
                   ),
                   SizedBox(
                     height: 8.0,
@@ -62,7 +75,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         password = value;
                       },
                       decoration: kTextFieldDecoration.copyWith(
-                          hintText: "Enter your password")),
+                          hintText: ">=6-Digit-Password")),
                   SizedBox(
                     height: 24.0,
                   ),
@@ -77,6 +90,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           final newUser =
                               await _auth.createUserWithEmailAndPassword(
                                   email: email, password: password);
+                          FirebaseUser user = await _auth.currentUser();
+                          UserUpdateInfo userInfo = UserUpdateInfo();
+                          userInfo.displayName = name;
+                          await user.updateProfile(userInfo);
                           if (newUser != null) {
                             Navigator.pushNamed(context, ChatScreen.id);
                           }

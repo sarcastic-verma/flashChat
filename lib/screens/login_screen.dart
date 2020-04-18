@@ -2,8 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flash_chat/components/roundedButton.dart';
 import 'package:flash_chat/constants.dart';
 import 'package:flash_chat/screens/chat_screen.dart';
+import 'package:flash_chat/screens/registration_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String id = "/loginScreen";
@@ -16,6 +19,9 @@ class _LoginScreenState extends State<LoginScreen> {
   String email;
   String password;
   bool showSpinner = false;
+  bool isRight = true;
+  TextEditingController passwordController = TextEditingController();
+  String passwordHintText = "Enter your password";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 48.0,
                 ),
                 TextField(
-                  autocorrect: false,
+                  autocorrect: true,
                   keyboardType: TextInputType.emailAddress,
                   textAlign: TextAlign.center,
                   onChanged: (value) {
@@ -58,12 +64,23 @@ class _LoginScreenState extends State<LoginScreen> {
                   autocorrect: false,
                   keyboardType: TextInputType.visiblePassword,
                   obscureText: true,
+                  controller: passwordController,
                   textAlign: TextAlign.center,
                   onChanged: (value) {
                     password = value;
                   },
-                  decoration: kTextFieldDecoration.copyWith(
-                      hintText: "Enter your password"),
+                  decoration: isRight
+                      ? kTextFieldDecoration.copyWith(
+                          hintText: passwordHintText)
+                      : kTextFieldDecoration.copyWith(
+                          hintText: passwordHintText,
+                          hintStyle: TextStyle(color: Colors.red),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.redAccent, width: 2.0),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(32.0)),
+                          )),
                 ),
                 SizedBox(
                   height: 24.0,
@@ -84,8 +101,41 @@ class _LoginScreenState extends State<LoginScreen> {
                       setState(() {
                         showSpinner = false;
                       });
-                    } catch (e) {
-                      print(e);
+                    } on PlatformException catch (e) {
+                      if (e.toString() ==
+                          "PlatformException(ERROR_WRONG_PASSWORD, The password is invalid or the user does not have a password., null)") {
+                        setState(() {
+                          passwordController.clear();
+                          passwordHintText = "Wrong Password";
+                          showSpinner = false;
+                          isRight = false;
+                        });
+                      } else if (e.toString() ==
+                          "PlatformException(ERROR_USER_NOT_FOUND, There is no user record corresponding to this identifier. The user may have been deleted., null)") {
+                        setState(() {
+                          showSpinner = false;
+                        });
+                        await Alert(
+                            context: context,
+                            title: "User Not Found",
+                            desc: "Register to continue!!",
+                            buttons: [
+                              DialogButton(
+                                gradient: LinearGradient(colors: [
+                                  Colors.deepOrange,
+                                  Colors.amberAccent
+                                ]),
+                                child: Text(
+                                  "COOL, I'll Register.",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 15),
+                                ),
+                                onPressed: () => Navigator.popAndPushNamed(
+                                    context, RegistrationScreen.id),
+                                width: 150,
+                              )
+                            ]).show();
+                      }
                     }
                   },
                 ),

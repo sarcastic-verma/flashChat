@@ -2,11 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flash_chat/components/MessageBubble.dart';
 import 'package:flash_chat/constants.dart';
+import 'package:flash_chat/screens/welcome_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 final _fireStore = Firestore.instance;
 FirebaseUser loggedInUser;
+String messageId;
 
 class ChatScreen extends StatefulWidget {
   static const String id = "/chatScreen";
@@ -26,9 +29,6 @@ class _ChatScreenState extends State<ChatScreen> {
   void getCurrentUser() async {
     try {
       loggedInUser = await _auth.currentUser();
-      if (loggedInUser != null) {
-        print(loggedInUser.email);
-      }
     } catch (e) {
       print(e);
     }
@@ -45,7 +45,7 @@ class _ChatScreenState extends State<ChatScreen> {
               icon: Icon(Icons.close),
               onPressed: () async {
                 await _auth.signOut();
-                Navigator.pop(context);
+                Navigator.popAndPushNamed(context, WelcomeScreen.id);
               }),
         ],
         title: Text('⚡️Chat'),
@@ -67,16 +67,23 @@ class _ChatScreenState extends State<ChatScreen> {
                       controller: messageController,
                       onChanged: (value) {
                         messageText = value;
-//                        messageController.clear();
                       },
                       decoration: kMessageTextFieldDecoration,
                     ),
                   ),
                   FlatButton(
-                    onPressed: () {
+                    onPressed: () async {
                       messageController.clear();
-                      _fireStore.collection("messages").add(
-                          {"text": messageText, "sender": loggedInUser.email});
+                      if (messageText.isEmpty != true) {
+                        DocumentReference ref =
+                            await _fireStore.collection("messages").add({
+                          "text": messageText,
+                          "sender": loggedInUser.email,
+                          "timeStamp": DateTime.now().millisecondsSinceEpoch,
+                          'username': loggedInUser.displayName,
+                        });
+                        messageId = ref.documentID;
+                      }
                     },
                     child: Text(
                       'Send',
@@ -97,7 +104,8 @@ class StreamMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-        stream: _fireStore.collection("messages").snapshots(),
+        stream:
+            _fireStore.collection("messages").orderBy('timeStamp').snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return Center(
@@ -111,10 +119,17 @@ class StreamMessage extends StatelessWidget {
           for (var message in messages) {
             final messageText = message.data["text"];
             final messageSender = message.data["sender"];
+            final messageUserName = message.data["username"];
             final currentUser = loggedInUser.email;
+            final messageTime = message.data['timeStamp'];
+            DateTime date = DateTime.fromMillisecondsSinceEpoch(messageTime);
+            final format = DateFormat('HH:mm');
+            final messTime = format.format(date);
             final messageBubble = MessageBubble(
                 text: messageText,
-                sender: messageSender,
+                id: messageId,
+                sender: messageUserName,
+                time: messTime,
                 isMe: currentUser == messageSender);
             messageBubbles.add(messageBubble);
           }
