@@ -85,9 +85,10 @@ class _ChatScreenState extends State<ChatScreen> {
                         messageId = ref.documentID;
                       }
                     },
-                    child: Text(
-                      'Send',
-                      style: kSendButtonTextStyle,
+                    child: Icon(
+                      Icons.send,
+                      color: Colors.deepOrange,
+                      size: 30,
                     ),
                   ),
                 ],

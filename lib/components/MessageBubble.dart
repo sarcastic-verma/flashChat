@@ -24,7 +24,12 @@ class _MessageBubbleState extends State<MessageBubble> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onLongPress: () async {
+      onDoubleTap: () {
+        setState(() {
+          showDel = false;
+        });
+      },
+      onLongPress: () {
         setState(() {
           showDel = true;
         });
