@@ -5,6 +5,7 @@ import 'package:flash_chat/constants.dart';
 import 'package:flash_chat/screens/welcome_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:intl/intl.dart';
 
 final _fireStore = Firestore.instance;
@@ -13,6 +14,10 @@ String messageId;
 
 class ChatScreen extends StatefulWidget {
   static const String id = "/chatScreen";
+  static String getID() {
+    return messageId;
+  }
+
   @override
   _ChatScreenState createState() => _ChatScreenState();
 }
@@ -71,24 +76,35 @@ class _ChatScreenState extends State<ChatScreen> {
                       decoration: kMessageTextFieldDecoration,
                     ),
                   ),
-                  FlatButton(
-                    onPressed: () async {
-                      messageController.clear();
-                      if (messageText.isEmpty != true) {
-                        DocumentReference ref =
-                            await _fireStore.collection("messages").add({
-                          "text": messageText,
-                          "sender": loggedInUser.email,
-                          "timeStamp": DateTime.now().millisecondsSinceEpoch,
-                          'username': loggedInUser.displayName,
-                        });
-                        messageId = ref.documentID;
-                      }
-                    },
-                    child: Icon(
-                      Icons.send,
-                      color: Colors.deepOrange,
-                      size: 30,
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: RaisedButton(
+                      color: Colors.amber,
+                      elevation: 1,
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(color: Colors.red),
+                        borderRadius: BorderRadius.circular(50.0),
+                      ),
+                      onPressed: () async {
+                        messageController.clear();
+                        if (messageText.isEmpty != true) {
+                          DocumentReference ref =
+                              await _fireStore.collection("messages").add({
+                            "text": messageText,
+                            "sender": loggedInUser.email,
+                            "timeStamp": DateTime.now().millisecondsSinceEpoch,
+                            'username': loggedInUser.displayName,
+                          });
+                          messageId = ref.documentID;
+                          messageText = null;
+                          print(messageText);
+                        }
+                      },
+                      child: Icon(
+                        Icons.send,
+                        color: Colors.deepOrange,
+                        size: 30,
+                      ),
                     ),
                   ),
                 ],

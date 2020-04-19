@@ -4,6 +4,7 @@ import 'package:flash_chat/constants.dart';
 import 'package:flash_chat/screens/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class RegistrationScreen extends StatefulWidget {
   static const String id = "/registerScreen";
@@ -102,6 +103,57 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           });
                         } catch (e) {
                           print(e);
+                          setState(() {
+                            showSpinner = false;
+                          });
+                          if (e.toString() ==
+                              "PlatformException(ERROR_WEAK_PASSWORD, The given password is invalid. [ Password should be at least 6 characters ], null)") {
+                            Alert(
+                                context: context,
+                                title: "Ah, a lazy one!",
+                                desc:
+                                    "Please choose atleast a 6 digit password...",
+                                buttons: [
+                                  DialogButton(
+                                    gradient: LinearGradient(colors: [
+                                      Colors.deepOrange,
+                                      Colors.amberAccent
+                                    ]),
+                                    child: Text(
+                                      "Ohk,lets TYPE",
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 15),
+                                    ),
+                                    onPressed: () => Navigator.popAndPushNamed(
+                                        context, RegistrationScreen.id),
+                                    width: 150,
+                                  )
+                                ]).show();
+                          }
+                          if (e.toString() ==
+                              "PlatformException(ERROR_EMAIL_ALREADY_IN_USE, The email address is already in use by another account., null)") {
+                            Alert(
+                                context: context,
+                                title: "Dopplegger?",
+                                desc:
+                                    "The email already exists, try with another email.",
+                                buttons: [
+                                  DialogButton(
+                                    gradient: LinearGradient(colors: [
+                                      Colors.deepOrange,
+                                      Colors.amberAccent
+                                    ]),
+                                    child: Text(
+                                      "Ok,Detective!!",
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 15),
+                                    ),
+                                    onPressed: () => Navigator.popAndPushNamed(
+                                        context, RegistrationScreen.id),
+                                    width: 150,
+                                  )
+                                ]).show();
+                          }
                         }
                       }),
                 ],
