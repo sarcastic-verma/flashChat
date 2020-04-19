@@ -134,7 +134,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               "PlatformException(ERROR_EMAIL_ALREADY_IN_USE, The email address is already in use by another account., null)") {
                             Alert(
                                 context: context,
-                                title: "Dopplegger?",
+                                title: "Doppelganger?",
                                 desc:
                                     "The email already exists, try with another email.",
                                 buttons: [

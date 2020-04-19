@@ -69,6 +69,9 @@ class _ChatScreenState extends State<ChatScreen> {
                 children: <Widget>[
                   Expanded(
                     child: TextField(
+                      autocorrect: true,
+                      maxLines: null,
+                      keyboardType: TextInputType.multiline,
                       controller: messageController,
                       onChanged: (value) {
                         messageText = value;
@@ -97,7 +100,6 @@ class _ChatScreenState extends State<ChatScreen> {
                           });
                           messageId = ref.documentID;
                           messageText = null;
-                          print(messageText);
                         }
                       },
                       child: Icon(
