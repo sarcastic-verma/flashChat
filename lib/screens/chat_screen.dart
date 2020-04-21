@@ -6,17 +6,14 @@ import 'package:flash_chat/screens/welcome_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 
 final _fireStore = Firestore.instance;
 FirebaseUser loggedInUser;
-String messageId;
 
 class ChatScreen extends StatefulWidget {
   static const String id = "/chatScreen";
-  static String getID() {
-    return messageId;
-  }
 
   @override
   _ChatScreenState createState() => _ChatScreenState();
@@ -44,17 +41,32 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.deepOrange),
         leading: null,
         actions: <Widget>[
           IconButton(
-              icon: Icon(Icons.close),
+            padding: EdgeInsets.all(8),
+            icon: FaIcon(
+              FontAwesomeIcons.cameraRetro,
+            ),
+            onPressed: () {},
+            tooltip: "Upload Media(Beta)",
+          ),
+          SizedBox(
+            width: 20,
+          ),
+          IconButton(
+              icon: FaIcon(
+                FontAwesomeIcons.signOutAlt,
+              ),
+              tooltip: "Logout",
               onPressed: () async {
                 await _auth.signOut();
                 Navigator.popAndPushNamed(context, WelcomeScreen.id);
               }),
         ],
-        title: Text('⚡️Chat'),
-        backgroundColor: Colors.deepOrange,
+        title: Text('             ⚡️', style: TextStyle(fontSize: 30)),
+        backgroundColor: Colors.white,
       ),
       body: SafeArea(
         child: Column(
@@ -82,7 +94,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   Padding(
                     padding: const EdgeInsets.only(right: 8.0),
                     child: RaisedButton(
-                      color: Colors.amber,
+                      color: Colors.white,
                       elevation: 1,
                       shape: RoundedRectangleBorder(
                         side: BorderSide(color: Colors.red),
@@ -91,14 +103,17 @@ class _ChatScreenState extends State<ChatScreen> {
                       onPressed: () async {
                         messageController.clear();
                         if (messageText.isEmpty != true) {
-                          DocumentReference ref =
-                              await _fireStore.collection("messages").add({
+                          await _fireStore.collection("messages").add({
+                            "likeCount": 0,
+                            "disLikeCount": 0,
+                            "liked": false,
+                            "disLiked": false,
                             "text": messageText,
                             "sender": loggedInUser.email,
                             "timeStamp": DateTime.now().millisecondsSinceEpoch,
                             'username': loggedInUser.displayName,
+                            "isDeleted": false
                           });
-                          messageId = ref.documentID;
                           messageText = null;
                         }
                       },
@@ -141,14 +156,25 @@ class StreamMessage extends StatelessWidget {
             final messageUserName = message.data["username"];
             final currentUser = loggedInUser.email;
             final messageTime = message.data['timeStamp'];
+            final messageId = message.documentID;
+            final liked = message.data["liked"];
+            final disLiked = message.data["disLiked"];
+            final isDeleted = message.data["isDeleted"];
+            final likeCount = message.data["likeCount"];
+            final dislikeCount = message.data["disLikeCount"];
             DateTime date = DateTime.fromMillisecondsSinceEpoch(messageTime);
             final format = DateFormat('HH:mm');
             final messTime = format.format(date);
             final messageBubble = MessageBubble(
+                likeCount: likeCount,
+                disLikeCount: dislikeCount,
                 text: messageText,
                 id: messageId,
                 sender: messageUserName,
+                isDeleted: isDeleted,
                 time: messTime,
+                liked: liked,
+                disliked: disLiked,
                 isMe: currentUser == messageSender);
             messageBubbles.add(messageBubble);
           }

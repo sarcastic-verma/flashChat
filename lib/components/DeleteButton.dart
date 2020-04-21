@@ -14,10 +14,10 @@ class DeleteButton extends StatelessWidget {
         elevation: 1,
         color: color,
         borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(0),
+            topLeft: Radius.circular(60),
             bottomRight: Radius.circular(60),
             topRight: Radius.circular(60),
-            bottomLeft: Radius.circular(60)),
+            bottomLeft: Radius.circular(0)),
         child: MaterialButton(
           padding: EdgeInsets.symmetric(horizontal: 3),
           onPressed: onPressed,

@@ -62,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 TextField(
                   autocorrect: false,
-                  keyboardType: TextInputType.visiblePassword,
+                  keyboardType: TextInputType.text,
                   obscureText: true,
                   controller: passwordController,
                   textAlign: TextAlign.center,
@@ -132,6 +132,30 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                                 onPressed: () => Navigator.popAndPushNamed(
                                     context, RegistrationScreen.id),
+                                width: 150,
+                              )
+                            ]).show();
+                      } else {
+                        setState(() {
+                          showSpinner = false;
+                        });
+                        await Alert(
+                            context: context,
+                            title: "Congratulations,an Unknow Error",
+                            desc: e.toString(),
+                            buttons: [
+                              DialogButton(
+                                gradient: LinearGradient(colors: [
+                                  Colors.deepOrange,
+                                  Colors.amberAccent
+                                ]),
+                                child: Text(
+                                  "SS to developer",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 15),
+                                ),
+                                onPressed: () => Navigator.popAndPushNamed(
+                                    context, LoginScreen.id),
                                 width: 150,
                               )
                             ]).show();

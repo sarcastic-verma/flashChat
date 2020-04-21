@@ -69,7 +69,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     height: 8.0,
                   ),
                   TextField(
-                      keyboardType: TextInputType.visiblePassword,
+                      keyboardType: TextInputType.text,
                       obscureText: true,
                       textAlign: TextAlign.center,
                       onChanged: (value) {
@@ -81,7 +81,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     height: 24.0,
                   ),
                   RoundedButton(
-                      color: Colors.deepOrangeAccent,
+                      color: Colors.deepOrange,
                       text: "Register",
                       onPressed: () async {
                         setState(() {
@@ -145,6 +145,27 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                     ]),
                                     child: Text(
                                       "Ok,Detective!!",
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 15),
+                                    ),
+                                    onPressed: () => Navigator.popAndPushNamed(
+                                        context, RegistrationScreen.id),
+                                    width: 150,
+                                  )
+                                ]).show();
+                          } else {
+                            Alert(
+                                context: context,
+                                title: "Congratulations,an Unknow Error",
+                                desc: e.toString(),
+                                buttons: [
+                                  DialogButton(
+                                    gradient: LinearGradient(colors: [
+                                      Colors.deepOrange,
+                                      Colors.amberAccent
+                                    ]),
+                                    child: Text(
+                                      "SS to developer",
                                       style: TextStyle(
                                           color: Colors.white, fontSize: 15),
                                     ),
