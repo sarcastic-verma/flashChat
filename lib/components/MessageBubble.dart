@@ -36,6 +36,10 @@ class MessageBubble extends StatefulWidget {
 
 class _MessageBubbleState extends State<MessageBubble> {
   bool showDel = false;
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,8 +79,8 @@ class _MessageBubbleState extends State<MessageBubble> {
       },
       child: widget.isMe != null &&
               widget.isDeleted != null &&
-              widget.isDeleted &&
-              widget.isMe
+              widget.isMe &&
+              widget.isDeleted
           ? FillerBox()
           : Padding(
               padding: const EdgeInsets.all(8.0),
@@ -112,23 +116,25 @@ class _MessageBubbleState extends State<MessageBubble> {
                               })
                           : FillerBox()
                       : FillerBox(),
-                  showDel
-                      ? DeleteButton(
-                          color: Colors.grey,
-                          text: "Delete 4 me",
-                          onPressed: () async {
-                            try {
-                              await _fireStore
-                                  .collection("messages")
-                                  .document(widget.id)
-                                  .updateData({"isDeleted": true});
-                              setState(() {
-                                showDel = false;
-                              });
-                            } catch (e) {
-                              print(e);
-                            }
-                          })
+                  widget.isMe
+                      ? showDel
+                          ? DeleteButton(
+                              color: Colors.grey,
+                              text: "Delete 4 me",
+                              onPressed: () async {
+                                try {
+                                  await _fireStore
+                                      .collection("messages")
+                                      .document(widget.id)
+                                      .updateData({"isDeleted": true});
+                                  setState(() {
+                                    showDel = false;
+                                  });
+                                } catch (e) {
+                                  print(e);
+                                }
+                              })
+                          : FillerBox()
                       : FillerBox(),
                   Material(
                     borderRadius: widget.isMe
@@ -166,88 +172,31 @@ class _MessageBubbleState extends State<MessageBubble> {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       widget.id != null && widget.likeCount > 0 && widget.liked
-                          ? Row(
-                              children: <Widget>[
-                                Text(
-                                  widget.likeCount.toString(),
-                                  style: TextStyle(fontSize: 15),
-                                  textAlign: TextAlign.center,
-                                ),
-                                IconButton(
-                                  color: Colors.red,
-                                  alignment: widget.isMe
-                                      ? Alignment.bottomRight
-                                      : Alignment.bottomLeft,
-                                  icon: FaIcon(
-                                    FontAwesomeIcons.heart,
-                                    size: 15,
-                                    color: Colors.red,
-                                  ),
-                                  onPressed: () async {
-                                    await _fireStore
-                                        .collection("messages")
-                                        .document(widget.id)
-                                        .updateData({
-                                      "likeCount": widget.likeCount - 1,
-                                    });
-                                  },
-                                ),
-                                Text(
-                                  widget.disLikeCount.toString(),
-                                  style: TextStyle(fontSize: 10),
-//                                  textAlign: TextAlign.center,
-                                ),
-                                IconButton(
-                                  alignment: widget.isMe
-                                      ? Alignment.bottomRight
-                                      : Alignment.bottomLeft,
-                                  icon: FaIcon(
-                                    FontAwesomeIcons.thumbsDown,
-                                    color: Colors.black,
-                                    size: 10,
-                                  ),
-                                  onPressed: () async {
-                                    await _fireStore
-                                        .collection("messages")
-                                        .document(widget.id)
-                                        .updateData({
-                                      "disLikeCount": widget.disLikeCount - 1
-                                    });
-                                  },
-                                ),
-                              ],
+                          ? BottomLiker(
+                              widget: widget,
+                              onPressed: () async {
+                                await _fireStore
+                                    .collection("messages")
+                                    .document(widget.id)
+                                    .updateData({
+                                  "likeCount": widget.likeCount - 1,
+                                });
+                              },
                             )
                           : FillerBox(),
                       widget.id != null &&
                               widget.disLikeCount > 0 &&
                               widget.disliked
-                          ? Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Text(
-                                  widget.disLikeCount.toString(),
-                                  style: TextStyle(fontSize: 10),
-//                                  textAlign: TextAlign.center,
-                                ),
-                                IconButton(
-                                  alignment: widget.isMe
-                                      ? Alignment.bottomRight
-                                      : Alignment.bottomLeft,
-                                  icon: FaIcon(
-                                    FontAwesomeIcons.thumbsDown,
-                                    color: Colors.black,
-                                    size: 10,
-                                  ),
-                                  onPressed: () async {
-                                    await _fireStore
-                                        .collection("messages")
-                                        .document(widget.id)
-                                        .updateData({
-                                      "disLikeCount": widget.disLikeCount - 1
-                                    });
-                                  },
-                                ),
-                              ],
+                          ? BottomDisLiker(
+                              widget: widget,
+                              onPressed: () async {
+                                await _fireStore
+                                    .collection("messages")
+                                    .document(widget.id)
+                                    .updateData({
+                                  "disLikeCount": widget.disLikeCount - 1
+                                });
+                              },
                             )
                           : FillerBox(),
                     ],
@@ -255,6 +204,64 @@ class _MessageBubbleState extends State<MessageBubble> {
                 ],
               ),
             ),
+    );
+  }
+}
+
+class BottomDisLiker extends StatelessWidget {
+  BottomDisLiker({this.widget, this.onPressed});
+  final MessageBubble widget;
+  final Function onPressed;
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        Text(
+          widget.disLikeCount.toString(),
+          style: TextStyle(
+            fontSize: 15,
+          ),
+          textAlign: widget.isMe ? TextAlign.right : TextAlign.center,
+        ),
+        IconButton(
+          alignment: widget.isMe ? Alignment.centerRight : Alignment.centerLeft,
+          icon: FaIcon(
+            FontAwesomeIcons.thumbsDown,
+            color: Colors.black,
+            size: 15,
+          ),
+          onPressed: onPressed,
+        ),
+      ],
+    );
+  }
+}
+
+class BottomLiker extends StatelessWidget {
+  BottomLiker({this.widget, this.onPressed});
+  final MessageBubble widget;
+  final Function onPressed;
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        Text(
+          widget.likeCount.toString(),
+          style: TextStyle(
+            fontSize: 15,
+          ),
+          textAlign: TextAlign.right,
+        ),
+        IconButton(
+          alignment: Alignment.centerLeft,
+          icon: FaIcon(
+            FontAwesomeIcons.heart,
+            size: 15,
+            color: Colors.red,
+          ),
+          onPressed: onPressed,
+        ),
+      ],
     );
   }
 }

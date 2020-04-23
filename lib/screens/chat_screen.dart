@@ -1,3 +1,5 @@
+//import 'dart:html';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flash_chat/components/MessageBubble.dart';
@@ -22,6 +24,16 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final _auth = FirebaseAuth.instance;
   String messageText;
+////  File _image;
+//
+//  Future getImage() async {
+//    dynamic image = await ImagePicker.pickImage(source: ImageSource.camera);
+//
+//    setState(() {
+////      _image = image;
+//    });
+//  }
+
   @override
   void initState() {
     getCurrentUser();
@@ -44,17 +56,17 @@ class _ChatScreenState extends State<ChatScreen> {
         iconTheme: IconThemeData(color: Colors.deepOrange),
         leading: null,
         actions: <Widget>[
-          IconButton(
-            padding: EdgeInsets.all(8),
-            icon: FaIcon(
-              FontAwesomeIcons.cameraRetro,
-            ),
-            onPressed: () {},
-            tooltip: "Upload Media(Beta)",
-          ),
-          SizedBox(
-            width: 20,
-          ),
+//          IconButton(
+//            padding: EdgeInsets.all(8),
+//            icon: FaIcon(
+//              FontAwesomeIcons.cameraRetro,
+//            ),
+//            onPressed: () {},
+//            tooltip: "Upload Media(Beta)",
+//          ),
+//          SizedBox(
+//            width: 20,
+//          ),
           IconButton(
               icon: FaIcon(
                 FontAwesomeIcons.signOutAlt,
@@ -181,10 +193,12 @@ class StreamMessage extends StatelessWidget {
           return Expanded(
             child: ListView(
               reverse: true,
-              padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+              padding: EdgeInsets.symmetric(horizontal: 7.0, vertical: 10.0),
               children: messageBubbles,
             ),
           );
         });
   }
 }
+//todo : Add notifications
+//todo: add camera feature

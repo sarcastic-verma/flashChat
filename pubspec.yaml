@@ -19,8 +19,13 @@ dependencies:
   intl: ^0.16.1
   image_picker: ^0.6.5
   image_cropper: ^1.2.1
+  shared_preferences: ^0.5.7
+  carousel_slider: ^2.0.0
   font_awesome_flutter: ^8.8.1
   rflutter_alert: ^1.0.3
+  firebase_storage: ^3.1.5
+  google_sign_in: ^4.4.4
+  flutter_local_notifications: ^1.4.1
 
 dev_dependencies:
   flutter_test:

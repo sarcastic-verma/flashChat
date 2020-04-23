@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "337321301480-e67cd51g6jp35luce4bnp287nrapcbb8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "co.dope.flash_chat",
+            "certificate_hash": "cf4a48055913539aa4349e801667b332057bbe21"
+          }
+        },
+        {
           "client_id": "337321301480-l2n7ekegsr6nqlmj2fj01fc5mthsn550.apps.googleusercontent.com",
           "client_type": 3
         }

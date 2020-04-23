@@ -4,7 +4,6 @@ import 'package:flash_chat/screens/login_screen.dart';
 import 'package:flash_chat/screens/registration_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class WelcomeScreen extends StatefulWidget {
   static const String id = "/";
@@ -98,37 +97,37 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                 thickness: 3,
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                IconButton(
-                  padding: EdgeInsets.all(8),
-                  icon: FaIcon(
-                    FontAwesomeIcons.google,
-                  ),
-                  onPressed: () {},
-                  tooltip: "SignIn with Google",
-                  color: Colors.red,
-                ),
-                IconButton(
-                  padding: EdgeInsets.all(8),
-                  icon: FaIcon(
-                    FontAwesomeIcons.github,
-                  ),
-                  onPressed: () {},
-                  tooltip: "SignIn with Github",
-                ),
-                IconButton(
-                  padding: EdgeInsets.all(8),
-                  icon: FaIcon(
-                    FontAwesomeIcons.facebook,
-                    color: Colors.indigo,
-                  ),
-                  onPressed: () {},
-                  tooltip: "SignIn with facebook",
-                )
-              ],
-            )
+//            Row(
+//              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//              children: [
+//                IconButton(
+//                  padding: EdgeInsets.all(8),
+//                  icon: FaIcon(
+//                    FontAwesomeIcons.google,
+//                  ),
+//                  onPressed: () {},
+//                  tooltip: "SignIn with Google",
+//                  color: Colors.red,
+//                ),
+//                IconButton(
+//                  padding: EdgeInsets.all(8),
+//                  icon: FaIcon(
+//                    FontAwesomeIcons.github,
+//                  ),
+//                  onPressed: () {},
+//                  tooltip: "SignIn with Github",
+//                ),
+//                IconButton(
+//                  padding: EdgeInsets.all(8),
+//                  icon: FaIcon(
+//                    FontAwesomeIcons.facebook,
+//                    color: Colors.indigo,
+//                  ),
+//                  onPressed: () {},
+//                  tooltip: "SignIn with facebook",
+//                )
+//              ],
+//            )
           ],
         ),
       ),
