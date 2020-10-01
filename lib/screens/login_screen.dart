@@ -122,8 +122,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             buttons: [
                               DialogButton(
                                 gradient: LinearGradient(colors: [
-                                  Colors.deepOrange,
-                                  Colors.amberAccent
+                                  Colors.deepPurple,
+                                  Colors.teal
                                 ]),
                                 child: Text(
                                   "COOL, I'll Register.",
@@ -146,8 +146,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             buttons: [
                               DialogButton(
                                 gradient: LinearGradient(colors: [
-                                  Colors.deepOrange,
-                                  Colors.amberAccent
+                                  Colors.deepPurple,
+                                  Colors.teal
                                 ]),
                                 child: Text(
                                   "SS to developer",

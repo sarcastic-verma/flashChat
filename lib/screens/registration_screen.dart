@@ -81,7 +81,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     height: 24.0,
                   ),
                   RoundedButton(
-                      color: Colors.deepOrange,
+                      color: Colors.deepPurple,
                       text: "Register",
                       onPressed: () async {
                         setState(() {
@@ -116,8 +116,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                 buttons: [
                                   DialogButton(
                                     gradient: LinearGradient(colors: [
-                                      Colors.deepOrange,
-                                      Colors.amberAccent
+                                      Colors.deepPurple,
+                                      Colors.teal
                                     ]),
                                     child: Text(
                                       "Ohk,lets TYPE",
@@ -140,8 +140,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                 buttons: [
                                   DialogButton(
                                     gradient: LinearGradient(colors: [
-                                      Colors.deepOrange,
-                                      Colors.amberAccent
+                                      Colors.deepPurple,
+                                      Colors.teal
                                     ]),
                                     child: Text(
                                       "Ok,Detective!!",
@@ -161,8 +161,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                 buttons: [
                                   DialogButton(
                                     gradient: LinearGradient(colors: [
-                                      Colors.deepOrange,
-                                      Colors.amberAccent
+                                      Colors.deepPurple,
+                                      Colors.teal
                                     ]),
                                     child: Text(
                                       "SS to developer",
