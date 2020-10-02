@@ -101,7 +101,9 @@ class _ChatScreenState extends State<ChatScreen> {
                         messageText = value;
                       },
                       decoration: kMessageTextFieldDecoration,
+
                     ),
+
                   ),
                   Padding(
                     padding: const EdgeInsets.only(right: 8.0),
@@ -133,7 +135,9 @@ class _ChatScreenState extends State<ChatScreen> {
                         Icons.send,
                         color: Colors.deepPurple,
                         size: 30,
+
                       ),
+
                     ),
                   ),
                 ],
