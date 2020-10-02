@@ -22,7 +22,7 @@ class IntroScreen extends StatelessWidget {
               Content(
                 imageName: "logo",
                 title: "Eh Eh boiii",
-                desc: "Lets get you familiar with the app...",
+                desc: "Lets get you familiar with the super this world's best app...",
                 showImage: true,
                 width: 200,
                 height: 200,
@@ -34,25 +34,25 @@ class IntroScreen extends StatelessWidget {
                 showImage: true,
                 title: "Don't Like a message??",
                 desc:
-                    "Show that, cause this ain't facebook..\nJust swipe left on that msg!! To undo that just press on dislike button.",
+                    "Show that!! , cause this ain't no facebook..\nJust swipe left on that msg!! To undo that just press on dislike button.",
               ),
               Content(
                 imageName: "like",
                 showImage: true,
                 title: "Like a message??",
                 desc:
-                    "Yes, by double tapping on it as many times as you want.\nTo undo that just press on like button.",
+                    "Yes, by double tapping on it as many times as you want.\nTo undo that just press on the like button.",
               ),
               Content(
                 imageName: "del",
                 showImage: true,
                 title: "But can you delete a msg??",
                 desc:
-                    "ofc, just long press to delete, tap on it to hide the delete menu!!",
+                    "why not?? Isn't this the best feature!, just long press to delete, tap on it to hide the delete menu!!",
               ),
               Content(
                 title: "Noice, wasn't it!!",
-                desc: "Hasta La'Vista Now",
+                desc: "Hasta La'Vista Now :)",
                 showImage: true,
                 imageName: "logo",
                 showButton: true,

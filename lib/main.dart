@@ -15,7 +15,7 @@ class FlashChat extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.light().copyWith(
-          primaryColor: Colors.amberAccent, buttonColor: Colors.black),
+          primaryColor: Colors.teal, buttonColor: Colors.black87),
       initialRoute: SplashScreen.id,
       routes: {
         IntroScreen.id: (context) => IntroScreen(),

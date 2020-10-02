@@ -53,7 +53,7 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.deepOrange),
+        iconTheme: IconThemeData(color: Colors.deepPurple),
         leading: null,
         actions: <Widget>[
 //          IconButton(
@@ -101,7 +101,9 @@ class _ChatScreenState extends State<ChatScreen> {
                         messageText = value;
                       },
                       decoration: kMessageTextFieldDecoration,
+
                     ),
+
                   ),
                   Padding(
                     padding: const EdgeInsets.only(right: 8.0),
@@ -109,7 +111,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       color: Colors.white,
                       elevation: 1,
                       shape: RoundedRectangleBorder(
-                        side: BorderSide(color: Colors.red),
+                        side: BorderSide(color: Colors.tealAccent),
                         borderRadius: BorderRadius.circular(50.0),
                       ),
                       onPressed: () async {
@@ -131,9 +133,11 @@ class _ChatScreenState extends State<ChatScreen> {
                       },
                       child: Icon(
                         Icons.send,
-                        color: Colors.deepOrange,
+                        color: Colors.deepPurple,
                         size: 30,
+
                       ),
+
                     ),
                   ),
                 ],
@@ -156,7 +160,7 @@ class StreamMessage extends StatelessWidget {
           if (!snapshot.hasData) {
             return Center(
               child: CircularProgressIndicator(
-                backgroundColor: Colors.amberAccent,
+                backgroundColor: Colors.teal,
               ),
             );
           }
